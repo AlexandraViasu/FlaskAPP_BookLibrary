@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    
+    <h1>Library</h1>
+    {% for book in books %}
+
+    <p>
+    <h2><b>{{book.title}}</b></h2>
+    <h3> Author: {{book.author}} </h3>
+    <h3>Genre: {{book.genre}} </h3>
+    <a href="/library/{{books.index(book)}}">Show Book</a>
+    </p> 
+    
+    {% if book.checked_out %}
+        <h4>
+            This book is checked out.
+        </h4>
+        
+    {% else %}
+        <h4>
+            This book is available.
+        </h4>
+        
+        <form method = "post" action="/books/{{index}}">
+            <label for="checkout">
+                <h4>
+                    Tick this box to checkout a book:
+                </h4>
+            </label>
+            <input type="checkbox" id="checkout" name="checkout" value="checkout">
+        </form>
+
+    {% endif %}
+
+
+    
+    
+    <form method = "post" action="/library/delete/{{loop.index0}}">
+    <input type="submit" value = "Delete">
+    </form>
+   
+    {% endfor %}
+
+    
+
+    <form action = "/library/addedbooks" method = "post">
+        <label for="title">
+            <h2>
+            Add new Book to the Library
+            </h2>
+            <h3>
+            Name of Book:
+            </h3>
+        </label>
+        <input type="text" name="title" id="title">
+
+        <label for="author">
+            <h3>Author:
+            </h3>
+        </label>
+        <input type="text" name="author" id="author"></input>
+
+        <label for="genre">
+            <h3>Genre:
+            </h3>
+        </label>
+        <input type="text" name="genre" id="genre"></input>
+        <input type="submit" value = "Add Book">
+    </form>
+</body>
+</html>
